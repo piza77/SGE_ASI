@@ -1,0 +1,71 @@
+# Objetivo
+Construir un sistema ERP modular multitenant para una consultora medioambiental, con arquitectura limpia y documentación completa. El sistema debe estar en un único repositorio con dos carpetas principales: **FRONT** (lógica del frontend) y **API** (lógica del backend).
+
+# Tecnologías
+- **Frontend (FRONT):**
+  - React + Vite
+  - TailwindCSS para estilos
+  - Estructura modular por vistas y componentes
+  - Documentación en README.md por carpeta
+
+- **Backend (API):**
+  - NodeJS con Express
+  - Base de datos MySQL (modelada y gestionada con MySQL Workbench)
+  - Arquitectura en capas: rutas → controladores → servicios → modelos
+  - Documentación en README.md por módulo
+  - Endpoints RESTful con OpenAPI/Swagger
+
+# Estructura del repositorio
+
+# Módulos a implementar
+1. **Autenticación y Seguridad** → Login, roles, permisos, auditoría.
+2. **Tenants** → Gestión de empresas, branding, configuración.
+3. **Centros de Costos** → **Al crear un centro de costos debe solicitar:**
+   - IDE (identificador único del centro de costos)
+   - Cliente
+   - Número de contrato
+   - Número de identificación
+
+   **Categorías por defecto:**
+   - Recursos Humanos
+   - Logística
+   - Reembolsables
+   - Contratos
+   - Otros
+   - Imprevistos
+
+   **Cada categoría puede contener ítems con:**
+   - Fecha de implementación
+   - Fecha de inicio
+   - Fecha estimada de finalización
+   - Nombre del ítem
+   - Identificación (si aplica)
+   - Valor
+   - Observaciones
+
+4. **Inventarios** → Catálogo, movimientos, alertas.
+5. **Gestión Documental** → Documentos, versiones, metadatos, búsqueda.
+6. **Clientes** → Registro, contratos, proyectos.
+7. **Empleados** → Perfil, roles, timesheets, capacitación.
+8. **Cartera** → Facturas, pagos, aging report.
+9. **Tesorería** → Órdenes de pago, conciliación, flujo de caja.
+10. **Proveedores** → Alta, catálogo, órdenes de compra, recepciones.
+
+# Indicaciones específicas para Copilot
+- Crear las carpetas **FRONT** y **API** en el mismo nivel.
+- En **FRONT**, generar componentes y páginas por módulo, usando TailwindCSS para estilos y Vite para bundling.
+- En **API**, generar rutas, controladores, servicios y modelos por módulo, conectados a MySQL.
+- Documentar cada módulo en su propio README.md explicando propósito, endpoints y ejemplos de uso.
+- Generar un archivo `tareas_copilot.md` con pasos detallados para el desarrollo:
+  - Scaffold inicial de FRONT y API.
+  - Configuración de TailwindCSS y Vite.
+  - Configuración de Express y conexión MySQL.
+  - Implementación de cada módulo con endpoints RESTful.
+  - Documentación Swagger/OpenAPI.
+  - Pruebas unitarias y de integración.
+- Incluir ejemplos de endpoints y contratos en OpenAPI para cada módulo.
+- Preparar `docker-compose.yml` para levantar FRONT, API y MySQL juntos.
+- Asegurar que todo el código esté comentado y documentado para facilitar mantenimiento.
+
+# Resultado esperado
+Un repositorio completo con FRONT y API, cada uno modularizado y documentado, listo para ser desplegado y extendido. El sistema debe ser multitenant, escalable y preparado para integrarse con World Office en el futuro.
