@@ -218,6 +218,12 @@ WHERE name IN ('auth.login', 'auth.logout', 'user.view');
 -- CREATE DEFAULT ADMIN USER
 -- Password: Admin123! (hashed with bcrypt)
 -- Hash generated with: bcrypt.hashSync('Admin123!', 10)
+-- 
+-- SECURITY WARNING: This is a demo password for initial setup only!
+-- YOU MUST change this password immediately after first login:
+-- 1. Login as admin@demo.com
+-- 2. Change password via API: POST /api/auth/change-password
+-- 3. Or update the hash directly in this file before running schema
 -- ====================================
 INSERT INTO users (tenant_id, email, password, first_name, last_name, status) 
 VALUES (

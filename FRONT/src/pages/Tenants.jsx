@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import tenantService from '../services/tenantService';
+import { normalizeSlug } from '../utils/validators';
 
 const Tenants = () => {
   const { user, logout, hasPermission } = useAuth();
@@ -282,7 +283,7 @@ const Tenants = () => {
                         required
                         disabled={!!editingTenant}
                         value={formData.slug}
-                        onChange={(e) => setFormData({ ...formData, slug: e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '-') })}
+                        onChange={(e) => setFormData({ ...formData, slug: normalizeSlug(e.target.value) })}
                         className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm disabled:bg-gray-100"
                         placeholder="mi-empresa"
                       />

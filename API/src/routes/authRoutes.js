@@ -3,6 +3,7 @@ const router = express.Router();
 const authController = require('../controllers/authController');
 const { authenticateToken } = require('../middleware/auth');
 const { body } = require('express-validator');
+const { PASSWORD_REGEX, PASSWORD_MIN_LENGTH } = require('../utils/constants');
 
 /**
  * @swagger
@@ -51,9 +52,9 @@ router.post(
     body('tenantId').isInt().withMessage('Tenant ID must be an integer'),
     body('email').isEmail().withMessage('Valid email is required'),
     body('password')
-      .isLength({ min: 8 })
-      .withMessage('Password must be at least 8 characters long')
-      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]/)
+      .isLength({ min: PASSWORD_MIN_LENGTH })
+      .withMessage(`Password must be at least ${PASSWORD_MIN_LENGTH} characters long`)
+      .matches(PASSWORD_REGEX)
       .withMessage('Password must contain uppercase, lowercase, number and special character'),
     body('firstName').notEmpty().withMessage('First name is required'),
     body('lastName').notEmpty().withMessage('Last name is required'),
@@ -155,9 +156,9 @@ router.post(
   [
     body('oldPassword').notEmpty().withMessage('Current password is required'),
     body('newPassword')
-      .isLength({ min: 8 })
-      .withMessage('New password must be at least 8 characters long')
-      .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]/)
+      .isLength({ min: PASSWORD_MIN_LENGTH })
+      .withMessage(`New password must be at least ${PASSWORD_MIN_LENGTH} characters long`)
+      .matches(PASSWORD_REGEX)
       .withMessage('Password must contain uppercase, lowercase, number and special character')
   ],
   authController.changePassword
