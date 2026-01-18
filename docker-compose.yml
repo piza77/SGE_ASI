@@ -12,7 +12,7 @@ services:
       MYSQL_USER: sge_user
       MYSQL_PASSWORD: sge_password
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mysql_data:/var/lib/mysql
       - ./API/database/init:/docker-entrypoint-initdb.d
@@ -50,7 +50,6 @@ services:
         condition: service_healthy
     networks:
       - sge_network
-    command: npm run dev
 
   # Frontend React
   front:
@@ -71,7 +70,6 @@ services:
       - api
     networks:
       - sge_network
-    command: npm run dev
 
 volumes:
   mysql_data:
