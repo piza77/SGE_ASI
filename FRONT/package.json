@@ -1,5 +1,6 @@
 {
 <<<<<<< HEAD
+<<<<<<< HEAD
   "name": "front",
   "private": true,
   "version": "0.0.0",
@@ -8,10 +9,16 @@
   "version": "1.0.0",
   "description": "Frontend for SGE ASI - ERP System",
 >>>>>>> origin/copilot/create-erp-module-structure
+=======
+  "name": "sge-asi-front",
+  "version": "1.0.0",
+  "description": "Frontend for SGE ASI - Multitenant ERP System",
+>>>>>>> origin/copilot/complete-authentication-and-tenants
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+<<<<<<< HEAD
 <<<<<<< HEAD
     "lint": "eslint .",
     "preview": "vite preview"
@@ -42,10 +49,15 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage"
+=======
+    "preview": "vite preview",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
+>>>>>>> origin/copilot/complete-authentication-and-tenants
   },
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+<<<<<<< HEAD
     "react-router-dom": "^6.21.1",
     "axios": "^1.6.5",
     "zustand": "^4.4.7",
@@ -77,5 +89,22 @@
     "node": ">=18.0.0",
     "npm": ">=9.0.0"
 >>>>>>> origin/copilot/create-erp-module-structure
+=======
+    "react-router-dom": "^6.21.0",
+    "axios": "^1.6.2"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8.55.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "postcss": "^8.4.32",
+    "tailwindcss": "^3.4.0",
+    "vite": "^5.0.8"
+>>>>>>> origin/copilot/complete-authentication-and-tenants
   }
 }

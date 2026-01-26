@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
+<<<<<<< HEAD
 import { authService } from '../services/authService';
 
 const AuthContext = createContext(null);
@@ -44,6 +45,12 @@ export const AuthProvider = ({ children }) => {
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
+=======
+import authService from '../services/authService';
+
+const AuthContext = createContext(null);
+
+>>>>>>> origin/copilot/complete-authentication-and-tenants
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
@@ -52,4 +59,123 @@ export const useAuth = () => {
   return context;
 };
 
+<<<<<<< HEAD
+=======
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  // Load token from localStorage on mount
+  useEffect(() => {
+    const initAuth = () => {
+      try {
+        const storedToken = localStorage.getItem('token');
+        const storedUser = localStorage.getItem('user');
+
+        if (storedToken && storedUser) {
+          setToken(storedToken);
+          setUser(JSON.parse(storedUser));
+          setIsAuthenticated(true);
+          authService.setAuthToken(storedToken);
+        }
+      } catch (error) {
+        console.error('Error loading auth data:', error);
+        logout();
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    initAuth();
+  }, []);
+
+  const login = async (email, password, tenantSlug) => {
+    try {
+      const response = await authService.login(email, password, tenantSlug);
+      
+      if (response.success) {
+        const { token: newToken, user: newUser } = response.data;
+        
+        // Save to state
+        setToken(newToken);
+        setUser(newUser);
+        setIsAuthenticated(true);
+        
+        // Persist to localStorage
+        localStorage.setItem('token', newToken);
+        localStorage.setItem('user', JSON.stringify(newUser));
+        
+        // Set token for future requests
+        authService.setAuthToken(newToken);
+        
+        return { success: true };
+      }
+      
+      return { success: false, message: response.message };
+    } catch (error) {
+      console.error('Login error:', error);
+      return { 
+        success: false, 
+        message: error.response?.data?.message || 'Login failed. Please try again.' 
+      };
+    }
+  };
+
+  const register = async (userData) => {
+    try {
+      const response = await authService.register(userData);
+      return response;
+    } catch (error) {
+      console.error('Registration error:', error);
+      throw error;
+    }
+  };
+
+  const logout = () => {
+    setToken(null);
+    setUser(null);
+    setIsAuthenticated(false);
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    authService.setAuthToken(null);
+  };
+
+  const hasPermission = (permission) => {
+    if (!user || !user.permissions) return false;
+    return user.permissions.includes(permission);
+  };
+
+  const hasRole = (role) => {
+    if (!user || !user.roles) return false;
+    return user.roles.includes(role);
+  };
+
+  const hasAnyRole = (roles) => {
+    if (!user || !user.roles) return false;
+    return roles.some(role => user.roles.includes(role));
+  };
+
+  const value = {
+    user,
+    token,
+    isAuthenticated,
+    loading,
+    login,
+    register,
+    logout,
+    hasPermission,
+    hasRole,
+    hasAnyRole
+  };
+
+  return (
+    <AuthContext.Provider value={value}>
+      {children}
+    </AuthContext.Provider>
+  );
+};
+
+>>>>>>> origin/copilot/complete-authentication-and-tenants
 export default AuthContext;

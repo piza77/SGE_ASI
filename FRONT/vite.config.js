@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -38,4 +39,13 @@ export default defineConfig({
     sourcemap: true
   }
 >>>>>>> origin/copilot/create-erp-module-structure
+=======
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    port: 3000,
+    host: true
+  }
+>>>>>>> origin/copilot/complete-authentication-and-tenants
 })

@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 FROM node:18-alpine
 
 # Establecer directorio de trabajo
@@ -33,12 +34,17 @@ CMD ["node", "server.js"]
 # Build stage
 FROM node:18-alpine AS build
 
+=======
+FROM node:18-alpine
+
+>>>>>>> origin/copilot/complete-authentication-and-tenants
 WORKDIR /app
 
 # Copy package files
 COPY package*.json ./
 
 # Install dependencies
+<<<<<<< HEAD
 RUN npm ci --only=production
 
 # Production stage
@@ -69,3 +75,15 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=30s --retries=3 \
 # Start application
 CMD ["npm", "start"]
 >>>>>>> origin/copilot/create-erp-module-structure
+=======
+RUN npm install
+
+# Copy source code
+COPY . .
+
+# Expose port
+EXPOSE 4000
+
+# Start application
+CMD ["npm", "start"]
+>>>>>>> origin/copilot/complete-authentication-and-tenants

@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import MainLayout from './layouts/MainLayout';
@@ -75,6 +76,46 @@ function App() {
       <AppRouter />
     </BrowserRouter>
 >>>>>>> origin/copilot/create-erp-module-structure
+=======
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
+import Tenants from './pages/Tenants';
+
+function App() {
+  return (
+    <Router>
+      <AuthProvider>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          
+          <Route 
+            path="/dashboard" 
+            element={
+              <ProtectedRoute>
+                <Dashboard />
+              </ProtectedRoute>
+            } 
+          />
+          
+          <Route 
+            path="/tenants" 
+            element={
+              <ProtectedRoute requiredPermission="tenant.view">
+                <Tenants />
+              </ProtectedRoute>
+            } 
+          />
+          
+          <Route path="/" element={<Navigate to="/dashboard" replace />} />
+          
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        </Routes>
+      </AuthProvider>
+    </Router>
+>>>>>>> origin/copilot/complete-authentication-and-tenants
   );
 }
 

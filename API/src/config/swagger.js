@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 const swaggerJsdoc = require('swagger-jsdoc');
 
 /**
@@ -11,10 +12,15 @@ const swaggerJsdoc = require('swagger-jsdoc');
 const swaggerJsdoc = require('swagger-jsdoc');
 
 >>>>>>> origin/copilot/create-erp-module-structure
+=======
+const swaggerJsdoc = require('swagger-jsdoc');
+
+>>>>>>> origin/copilot/complete-authentication-and-tenants
 const options = {
   definition: {
     openapi: '3.0.0',
     info: {
+<<<<<<< HEAD
       title: 'SGE ASI API',
       version: '1.0.0',
 <<<<<<< HEAD
@@ -42,10 +48,19 @@ const options = {
       license: {
         name: 'Proprietary',
         url: 'https://asi.com/license'
+=======
+      title: 'SGE ASI ERP API',
+      version: '1.0.0',
+      description: 'API Documentation for SGE ASI Multitenant ERP System',
+      contact: {
+        name: 'API Support',
+        email: 'support@sgeasi.com'
+>>>>>>> origin/copilot/complete-authentication-and-tenants
       }
     },
     servers: [
       {
+<<<<<<< HEAD
         url: 'http://localhost:3000',
         description: 'Development server'
       },
@@ -54,12 +69,18 @@ const options = {
         description: 'Production server'
       }
 >>>>>>> origin/copilot/create-erp-module-structure
+=======
+        url: 'http://localhost:4000',
+        description: 'Development server'
+      }
+>>>>>>> origin/copilot/complete-authentication-and-tenants
     ],
     components: {
       securitySchemes: {
         bearerAuth: {
           type: 'http',
           scheme: 'bearer',
+<<<<<<< HEAD
           bearerFormat: 'JWT',
 <<<<<<< HEAD
           description: 'Token JWT para autenticación',
@@ -137,6 +158,9 @@ const options = {
               type: 'object'
             }
           }
+=======
+          bearerFormat: 'JWT'
+>>>>>>> origin/copilot/complete-authentication-and-tenants
         }
       }
     },
@@ -144,6 +168,7 @@ const options = {
       {
         bearerAuth: []
       }
+<<<<<<< HEAD
 >>>>>>> origin/copilot/create-erp-module-structure
     ],
     tags: [
@@ -238,6 +263,11 @@ const options = {
     './src/modules/**/routes.js'
   ]
 >>>>>>> origin/copilot/create-erp-module-structure
+=======
+    ]
+  },
+  apis: ['./src/routes/*.js']
+>>>>>>> origin/copilot/complete-authentication-and-tenants
 };
 
 const swaggerSpec = swaggerJsdoc(options);

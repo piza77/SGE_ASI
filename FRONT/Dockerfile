@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Stage 1: Development
 FROM node:18-alpine AS development
 WORKDIR /app
@@ -24,6 +25,9 @@ EXPOSE 80
 =======
 # Build stage
 FROM node:18-alpine AS build
+=======
+FROM node:18-alpine
+>>>>>>> origin/copilot/complete-authentication-and-tenants
 
 WORKDIR /app
 
@@ -31,11 +35,16 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
+<<<<<<< HEAD
 RUN npm ci
+=======
+RUN npm install
+>>>>>>> origin/copilot/complete-authentication-and-tenants
 
 # Copy source code
 COPY . .
 
+<<<<<<< HEAD
 # Build application
 RUN npm run build
 
@@ -58,3 +67,10 @@ HEALTHCHECK --interval=30s --timeout=3s --start-period=30s --retries=3 \
 # Start nginx
 >>>>>>> origin/copilot/create-erp-module-structure
 CMD ["nginx", "-g", "daemon off;"]
+=======
+# Expose port
+EXPOSE 3000
+
+# Start development server
+CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+>>>>>>> origin/copilot/complete-authentication-and-tenants
