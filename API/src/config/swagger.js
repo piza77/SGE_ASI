@@ -1,14 +1,23 @@
+<<<<<<< HEAD
 const swaggerJsdoc = require('swagger-jsdoc');
 
 /**
  * Configuración de Swagger/OpenAPI
  */
+=======
+/**
+ * Swagger/OpenAPI configuration
+ */
+const swaggerJsdoc = require('swagger-jsdoc');
+
+>>>>>>> origin/copilot/create-erp-module-structure
 const options = {
   definition: {
     openapi: '3.0.0',
     info: {
       title: 'SGE ASI API',
       version: '1.0.0',
+<<<<<<< HEAD
       description: 'API del Sistema de Gestión Empresarial ASI - ERP Modular Multitenant',
       contact: {
         name: 'Equipo de Desarrollo',
@@ -24,6 +33,27 @@ const options = {
         url: 'https://api.sge-asi.com/api',
         description: 'Servidor de producción',
       },
+=======
+      description: 'API documentation for SGE ASI - Sistema de Gestión Empresarial',
+      contact: {
+        name: 'ASI Consultora',
+        email: 'support@asi.com'
+      },
+      license: {
+        name: 'Proprietary',
+        url: 'https://asi.com/license'
+      }
+    },
+    servers: [
+      {
+        url: 'http://localhost:3000',
+        description: 'Development server'
+      },
+      {
+        url: 'https://api.asi.com',
+        description: 'Production server'
+      }
+>>>>>>> origin/copilot/create-erp-module-structure
     ],
     components: {
       securitySchemes: {
@@ -31,8 +61,13 @@ const options = {
           type: 'http',
           scheme: 'bearer',
           bearerFormat: 'JWT',
+<<<<<<< HEAD
           description: 'Token JWT para autenticación',
         },
+=======
+          description: 'JWT Authorization header using the Bearer scheme'
+        }
+>>>>>>> origin/copilot/create-erp-module-structure
       },
       schemas: {
         Error: {
@@ -40,25 +75,41 @@ const options = {
           properties: {
             success: {
               type: 'boolean',
+<<<<<<< HEAD
               example: false,
             },
             message: {
               type: 'string',
               example: 'Error message',
+=======
+              example: false
+            },
+            message: {
+              type: 'string',
+              example: 'Error message'
+>>>>>>> origin/copilot/create-erp-module-structure
             },
             errors: {
               type: 'array',
               items: {
+<<<<<<< HEAD
                 type: 'object',
               },
             },
           },
+=======
+                type: 'object'
+              }
+            }
+          }
+>>>>>>> origin/copilot/create-erp-module-structure
         },
         Success: {
           type: 'object',
           properties: {
             success: {
               type: 'boolean',
+<<<<<<< HEAD
               example: true,
             },
             data: {
@@ -75,10 +126,30 @@ const options = {
       {
         bearerAuth: [],
       },
+=======
+              example: true
+            },
+            message: {
+              type: 'string',
+              example: 'Operation successful'
+            },
+            data: {
+              type: 'object'
+            }
+          }
+        }
+      }
+    },
+    security: [
+      {
+        bearerAuth: []
+      }
+>>>>>>> origin/copilot/create-erp-module-structure
     ],
     tags: [
       {
         name: 'Auth',
+<<<<<<< HEAD
         description: 'Endpoints de autenticación y seguridad',
       },
       {
@@ -120,6 +191,53 @@ const options = {
     ],
   },
   apis: ['./src/routes/*.js', './src/models/*.js'],
+=======
+        description: 'Authentication and security endpoints'
+      },
+      {
+        name: 'Tenants',
+        description: 'Multi-tenant management'
+      },
+      {
+        name: 'Cost Centers',
+        description: 'Cost center management with categories and items'
+      },
+      {
+        name: 'Inventory',
+        description: 'Inventory management'
+      },
+      {
+        name: 'Documents',
+        description: 'Document management system'
+      },
+      {
+        name: 'Clients',
+        description: 'Client management'
+      },
+      {
+        name: 'Employees',
+        description: 'Employee management'
+      },
+      {
+        name: 'Portfolio',
+        description: 'Portfolio and invoicing management'
+      },
+      {
+        name: 'Treasury',
+        description: 'Treasury and cash flow management'
+      },
+      {
+        name: 'Suppliers',
+        description: 'Supplier management'
+      }
+    ]
+  },
+  apis: [
+    './src/modules/**/routes/*.js',
+    './src/modules/**/*.routes.js',
+    './src/modules/**/routes.js'
+  ]
+>>>>>>> origin/copilot/create-erp-module-structure
 };
 
 const swaggerSpec = swaggerJsdoc(options);

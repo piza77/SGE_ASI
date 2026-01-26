@@ -2,6 +2,7 @@ const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
 /**
+<<<<<<< HEAD
  * Configuración de Sequelize para conexión a MySQL
  */
 const sequelize = new Sequelize(
@@ -18,28 +19,64 @@ const sequelize = new Sequelize(
       min: 0,
       acquire: 30000,
       idle: 10000,
+=======
+ * Database configuration and Sequelize instance
+ */
+const sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
+  {
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT || 3307,
+    dialect: 'mysql',
+    logging: process.env.NODE_ENV === 'development' ? console.log : false,
+    pool: {
+      max: parseInt(process.env.DB_POOL_MAX) || 10,
+      min: parseInt(process.env.DB_POOL_MIN) || 0,
+      acquire: 30000,
+      idle: 10000
+>>>>>>> origin/copilot/create-erp-module-structure
     },
     define: {
       timestamps: true,
       underscored: true,
+<<<<<<< HEAD
     },
+=======
+      freezeTableName: true
+    }
+>>>>>>> origin/copilot/create-erp-module-structure
   }
 );
 
 /**
+<<<<<<< HEAD
  * Función para probar la conexión a la base de datos
+=======
+ * Test database connection
+>>>>>>> origin/copilot/create-erp-module-structure
  */
 const testConnection = async () => {
   try {
     await sequelize.authenticate();
+<<<<<<< HEAD
     console.log('✅ Conexión a la base de datos establecida correctamente');
   } catch (error) {
     console.error('❌ Error al conectar a la base de datos:', error);
     process.exit(1);
+=======
+    console.log('✅ Database connection established successfully');
+    return true;
+  } catch (error) {
+    console.error('❌ Unable to connect to database:', error.message);
+    return false;
+>>>>>>> origin/copilot/create-erp-module-structure
   }
 };
 
 /**
+<<<<<<< HEAD
  * Función para sincronizar modelos con la base de datos
  */
 const syncDatabase = async (options = {}) => {
@@ -48,6 +85,16 @@ const syncDatabase = async (options = {}) => {
     console.log('✅ Modelos sincronizados con la base de datos');
   } catch (error) {
     console.error('❌ Error al sincronizar modelos:', error);
+=======
+ * Sync database models
+ */
+const syncDatabase = async (force = false) => {
+  try {
+    await sequelize.sync({ force });
+    console.log('✅ Database synchronized successfully');
+  } catch (error) {
+    console.error('❌ Error synchronizing database:', error.message);
+>>>>>>> origin/copilot/create-erp-module-structure
     throw error;
   }
 };
@@ -55,5 +102,9 @@ const syncDatabase = async (options = {}) => {
 module.exports = {
   sequelize,
   testConnection,
+<<<<<<< HEAD
   syncDatabase,
+=======
+  syncDatabase
+>>>>>>> origin/copilot/create-erp-module-structure
 };

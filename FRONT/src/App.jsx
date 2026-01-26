@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import MainLayout from './layouts/MainLayout';
@@ -64,6 +65,16 @@ function App() {
         </Routes>
       </BrowserRouter>
     </AuthProvider>
+=======
+import { BrowserRouter } from 'react-router-dom';
+import AppRouter from './router/AppRouter';
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppRouter />
+    </BrowserRouter>
+>>>>>>> origin/copilot/create-erp-module-structure
   );
 }
 

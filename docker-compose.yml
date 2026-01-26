@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+<<<<<<< HEAD
   # MySQL Database
   mysql:
     image: mysql:8.0
@@ -18,6 +19,25 @@ services:
       - ./API/database/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - sge-network
+=======
+  # Base de datos MySQL
+  mysql:
+    image: mysql:8.0
+    container_name: sge_asi_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: sge_asi
+      MYSQL_USER: sge_user
+      MYSQL_PASSWORD: sge_password
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./API/database/init:/docker-entrypoint-initdb.d
+    networks:
+      - sge_network
+>>>>>>> origin/copilot/create-erp-module-structure
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       timeout: 20s
@@ -28,6 +48,7 @@ services:
     build:
       context: ./API
       dockerfile: Dockerfile
+<<<<<<< HEAD
     container_name: sge-api
     restart: unless-stopped
     environment:
@@ -47,10 +68,30 @@ services:
       - ./API:/app
       - /app/node_modules
       - api_uploads:/app/uploads
+=======
+    container_name: sge_asi_api
+    restart: unless-stopped
+    environment:
+      NODE_ENV: development
+      PORT: 3000
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_NAME: sge_asi
+      DB_USER: sge_user
+      DB_PASSWORD: sge_password
+      JWT_SECRET: your-super-secret-jwt-key-change-in-production
+      JWT_EXPIRES_IN: 24h
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./API:/app
+      - /app/node_modules
+>>>>>>> origin/copilot/create-erp-module-structure
     depends_on:
       mysql:
         condition: service_healthy
     networks:
+<<<<<<< HEAD
       - sge-network
     command: npm run dev
 
@@ -66,12 +107,29 @@ services:
       VITE_API_URL: ${VITE_API_URL:-http://localhost:3000/api}
     ports:
       - "${FRONTEND_PORT:-5173}:5173"
+=======
+      - sge_network
+
+  # Frontend React
+  front:
+    build:
+      context: ./FRONT
+      dockerfile: Dockerfile
+    container_name: sge_asi_front
+    restart: unless-stopped
+    environment:
+      VITE_API_URL: http://localhost:3000
+      VITE_APP_NAME: SGE ASI
+    ports:
+      - "5173:5173"
+>>>>>>> origin/copilot/create-erp-module-structure
     volumes:
       - ./FRONT:/app
       - /app/node_modules
     depends_on:
       - api
     networks:
+<<<<<<< HEAD
       - sge-network
     command: npm run dev
 
@@ -91,13 +149,22 @@ services:
       - mysql
     networks:
       - sge-network
+=======
+      - sge_network
+>>>>>>> origin/copilot/create-erp-module-structure
 
 volumes:
   mysql_data:
     driver: local
+<<<<<<< HEAD
   api_uploads:
     driver: local
 
 networks:
   sge-network:
+=======
+
+networks:
+  sge_network:
+>>>>>>> origin/copilot/create-erp-module-structure
     driver: bridge
