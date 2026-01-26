@@ -10,55 +10,35 @@ class AuthService {
   }
 
   async login(email, password, tenantSlug) {
-    try {
-      const response = await apiClient.post('/auth/login', {
-        email,
-        password,
-        tenantSlug
-      });
-      return response;
-    } catch (error) {
-      throw error;
-    }
+    const response = await apiClient.post('/auth/login', {
+      email,
+      password,
+      tenantSlug
+    });
+    return response;
   }
 
   async register(userData) {
-    try {
-      const response = await apiClient.post('/auth/register', userData);
-      return response;
-    } catch (error) {
-      throw error;
-    }
+    const response = await apiClient.post('/auth/register', userData);
+    return response;
   }
 
   async getCurrentUser() {
-    try {
-      const response = await apiClient.get('/auth/me');
-      return response;
-    } catch (error) {
-      throw error;
-    }
+    const response = await apiClient.get('/auth/me');
+    return response;
   }
 
   async changePassword(oldPassword, newPassword) {
-    try {
-      const response = await apiClient.post('/auth/change-password', {
-        oldPassword,
-        newPassword
-      });
-      return response;
-    } catch (error) {
-      throw error;
-    }
+    const response = await apiClient.post('/auth/change-password', {
+      oldPassword,
+      newPassword
+    });
+    return response;
   }
 
   async validateToken(token) {
-    try {
-      const response = await apiClient.post('/auth/validate', { token });
-      return response;
-    } catch (error) {
-      throw error;
-    }
+    const response = await apiClient.post('/auth/validate', { token });
+    return response;
   }
 }
 

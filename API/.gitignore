@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-node_modules
-package-lock.json
-=======
 node_modules/
 .env
 npm-debug.log*
@@ -12,4 +8,3 @@ coverage/
 *.log
 .vscode/
 .idea/
->>>>>>> cb3115dae7e7927b3a6ec2053782a56832ebdafc
