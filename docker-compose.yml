@@ -1,0 +1,93 @@
+version: '3.8'
+
+services:
+  # MySQL Database
+  mysql:
+    image: mysql:8.0
+    container_name: sge_asi_mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: sge_asi_erp
+      MYSQL_USER: sgeuser
+      MYSQL_PASSWORD: sgepassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./API/src/config/database-schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    networks:
+      - sge_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # Backend API
+  api:
+    build:
+      context: ./API
+      dockerfile: Dockerfile
+    container_name: sge_asi_api
+    environment:
+      NODE_ENV: production
+      PORT: 4000
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_USER: root
+      DB_PASSWORD: rootpassword
+      DB_NAME: sge_asi_erp
+      # IMPORTANT: Change this JWT secret in production!
+      JWT_SECRET: ${JWT_SECRET:-change-this-secret-in-production-use-random-string}
+      JWT_EXPIRES_IN: 24h
+      FRONTEND_URL: http://localhost:3000
+    ports:
+      - "4000:4000"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - sge_network
+    volumes:
+      - ./API:/app
+      - /app/node_modules
+
+  # Frontend
+  frontend:
+    build:
+      context: ./FRONT
+      dockerfile: Dockerfile
+    container_name: sge_asi_frontend
+    environment:
+      VITE_API_URL: http://localhost:4000/api
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    networks:
+      - sge_network
+    volumes:
+      - ./FRONT:/app
+      - /app/node_modules
+
+  # phpMyAdmin (optional)
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: sge_asi_phpmyadmin
+    environment:
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+      PMA_USER: root
+      PMA_PASSWORD: rootpassword
+    ports:
+      - "8080:80"
+    depends_on:
+      - mysql
+    networks:
+      - sge_network
+
+networks:
+  sge_network:
+    driver: bridge
+
+volumes:
+  mysql_data:
