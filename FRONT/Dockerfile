@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 # Stage 1: Development
 FROM node:18-alpine AS development
 WORKDIR /app
@@ -13,64 +11,26 @@ CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
 FROM node:18-alpine AS build
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 COPY . .
 RUN npm run build
 
 # Stage 3: Production
 FROM nginx:alpine AS production
-COPY --from=build /app/dist /usr/share/nginx/html
+WORKDIR /usr/share/nginx/html
+
+# Copiar los archivos construidos desde el stage de build
+COPY --from=build /app/dist .
+
+# Copiar la configuración de Nginx
 COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+# Exponer el puerto 80
 EXPOSE 80
-=======
-# Build stage
-FROM node:18-alpine AS build
-=======
-FROM node:18-alpine
->>>>>>> origin/copilot/complete-authentication-and-tenants
 
-WORKDIR /app
-
-# Copy package files
-COPY package*.json ./
-
-# Install dependencies
-<<<<<<< HEAD
-RUN npm ci
-=======
-RUN npm install
->>>>>>> origin/copilot/complete-authentication-and-tenants
-
-# Copy source code
-COPY . .
-
-<<<<<<< HEAD
-# Build application
-RUN npm run build
-
-# Production stage
-FROM nginx:alpine
-
-# Copy built files
-COPY --from=build /app/dist /usr/share/nginx/html
-
-# Copy nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Expose port
-EXPOSE 5173
-
-# Health check
+# Healthcheck para monitorear la salud del contenedor
 HEALTHCHECK --interval=30s --timeout=3s --start-period=30s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:5173 || exit 1
+  CMD wget --no-verbose --tries=1 --spider http://localhost:80 || exit 1
 
-# Start nginx
->>>>>>> origin/copilot/create-erp-module-structure
+# Comando para iniciar Nginx
 CMD ["nginx", "-g", "daemon off;"]
-=======
-# Expose port
-EXPOSE 3000
-
-# Start development server
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
->>>>>>> origin/copilot/complete-authentication-and-tenants
