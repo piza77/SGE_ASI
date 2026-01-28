@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
-import tenantService from '../services/tenantService';
-import { normalizeSlug } from '../utils/validators';
+import { useAuth } from '../../context/AuthContext';
+import tenantService from '../../services/tenantService';
+import { normalizeSlug } from '../../utils/validators';
 
 const Tenants = () => {
   const { user, logout, hasPermission } = useAuth();
