@@ -1,55 +1,42 @@
-# Stage 1: Development
-FROM node:18-slim AS development
-
-# Establecer el directorio de trabajo
-WORKDIR /app
-
-# Instalar dependencias necesarias para el desarrollo
-COPY package*.json ./
-RUN npm install
-
-# Copiar el resto de los archivos
-COPY . .
-
-# Exponer el puerto para desarrollo
-EXPOSE 5173
-
-# Comando para iniciar el entorno de desarrollo
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
-
-# Stage 2: Build
+# Etapa 1: Construcción del Frontend
 FROM node:18-slim AS build
 
 # Establecer el directorio de trabajo
 WORKDIR /app
 
-# Instalar únicamente dependencias de producción
+# Copiar archivo package.json y package-lock.json
 COPY package*.json ./
-COPY package-lock.json ./
-RUN npm ci
 
-# Copiar el resto de los archivos
+# Desactivar dependencias opcionales en npm
+ENV NPM_CONFIG_OPTIONAL=false
+
+# Instalar dependencias sin incluir las opcionales
+RUN npm ci --only=production
+
+# Copiar el resto del código del proyecto
 COPY . .
 
-# Construir el proyecto para producción
+# Construcción de la aplicación
 RUN npm run build
 
-# Stage 3: Production
-FROM nginx:stable
-WORKDIR /usr/share/nginx/html
+# Etapa 2: Servir la aplicación estática con Nginx
+FROM nginx:stable-alpine
 
-# Copiar los archivos estáticos generados en el build
-COPY --from=build /app/dist .
+# Remover archivos predeterminados de Nginx
+RUN rm -rf /usr/share/nginx/html/*
 
-# Copiar la configuración personalizada de Nginx
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+# Copiar los archivos construidos del proyecto
+COPY --from=build /app/dist /usr/share/nginx/html
 
-# Exponer el puerto de producción
+# Configurar archivo Nginx (opcional)
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
+
+# Exponer puerto 80
 EXPOSE 80
 
-# Configurar un chequeo de salud para la imagen
-HEALTHCHECK --interval=30s --timeout=3s --start-period=30s --retries=3 \
-  CMD wget --no-verbose --tries=1 --spider http://localhost:80 || exit 1
+# Chequeo de salud (opcional)
+HEALTHCHECK --interval=30s --timeout=5s \
+  CMD wget --quiet --spider http://localhost:80 || exit 1
 
-# Comando final para correr Nginx
+# Comando para iniciar el servicio
 CMD ["nginx", "-g", "daemon off;"]
