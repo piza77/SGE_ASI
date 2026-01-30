@@ -42,7 +42,7 @@ const Dashboard = () => {
         <div className="px-4 py-6 sm:px-0">
           <div className="mb-8">
             <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              Bienvenido al Sistema ERP
+              Sistema ERP
             </h2>
             <p className="text-gray-600">
               Usuario: {user?.email} | Roles: {user?.roles?.join(', ')}
