@@ -67,7 +67,6 @@ services:
       - sge_network
     volumes:
       - ./FRONT:/app
-      - /app/node_modules
 
   # phpMyAdmin (optional, for database management)
   phpmyadmin:

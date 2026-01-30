@@ -12,10 +12,16 @@
     "lint": "eslint src/**/*.js",
     "lint:fix": "eslint src/**/*.js --fix",
     "db:migrate": "node database/migrate.js",
-    "db:seed": "node database/seed.js",    
+    "db:seed": "node database/seed.js",
     "build": "vite build"
   },
-  "keywords": ["erp", "api", "express", "mysql", "multitenant"],
+  "keywords": [
+    "erp",
+    "api",
+    "express",
+    "mysql",
+    "multitenant"
+  ],
   "author": "ASI Consultora",
   "license": "PROPRIETARY",
   "dependencies": {
@@ -40,10 +46,14 @@
     "jest": "^30.2.0",
     "nodemon": "^3.1.11",
     "prettier": "^3.1.1",
-    "supertest": "^6.3.3"
+    "supertest": "^6.3.3",
+    "vite": "^7.3.1"
   },
   "engines": {
     "node": ">=18.0.0",
     "npm": ">=9.0.0"
+  },
+  "optionalDependencies": {
+  "@rollup/rollup-linux-x64-gnu": "^4.24.0"
   }
 }
