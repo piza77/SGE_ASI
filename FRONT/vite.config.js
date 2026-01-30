@@ -1,12 +1,5 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [react()],
-=======
 import path from 'path'
 
 // https://vitejs.dev/config/
@@ -21,31 +14,21 @@ export default defineConfig({
       '@store': path.resolve(__dirname, './src/store'),
       '@hooks': path.resolve(__dirname, './src/hooks'),
       '@utils': path.resolve(__dirname, './src/utils'),
-      '@assets': path.resolve(__dirname, './src/assets'),
+      '@assets': path.resolve(__dirname, './src/assets')
     }
   },
   server: {
-    port: 5173,
-    host: true,
+    port: 5173, // Puerto local del servidor de desarrollo
+    host: true, // Habilita el servidor para ser accesible desde otros dispositivos en tu red
     proxy: {
       '/api': {
-        target: process.env.VITE_API_URL || 'http://localhost:3000',
+        target: process.env.VITE_API_URL || 'http://localhost:3000', // Redirige /api a tu backend
         changeOrigin: true
       }
     }
   },
   build: {
-    outDir: 'dist',
-    sourcemap: true
+    outDir: 'dist', // Carpeta de salida para los archivos compilados
+    sourcemap: true // Generar mapas de fuente para depuración
   }
->>>>>>> origin/copilot/create-erp-module-structure
-=======
-
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    port: 3000,
-    host: true
-  }
->>>>>>> origin/copilot/complete-authentication-and-tenants
 })

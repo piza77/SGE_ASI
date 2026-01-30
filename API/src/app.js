@@ -4,7 +4,7 @@ const helmet = require('helmet');
 const morgan = require('morgan');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swagger');
-const errorHandler = require('./middleware/errorHandler');
+/**const errorHandler = require('./middleware/errorHandler');*/
 
 /**
  * Crear instancia de Express

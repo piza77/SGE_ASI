@@ -13,7 +13,8 @@
     "lint:fix": "eslint src/**/*.js --fix",
     "db:migrate": "node database/migrate.js",
     "db:seed": "node database/seed.js",
-    "build": "vite build"
+    "build": "vite build",
+    "serve": "vite preview"
   },
   "keywords": [
     "erp",
