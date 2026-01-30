@@ -25,7 +25,7 @@ const Dashboard = () => {
     <div>
       <div className="mb-6">
         <h1 className="text-3xl font-bold text-gray-900">
-          Bienvenido, {user?.firstName || 'Usuario'}
+          Hola, {user?.firstName || 'Usuario'}
         </h1>
         <p className="text-gray-600 mt-1">
           Aquí tienes un resumen de tu sistema

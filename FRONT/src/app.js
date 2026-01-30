@@ -74,7 +74,7 @@ app.use('/api', routes);
 app.get('/', (req, res) => {
   res.json({
     success: true,
-    message: 'Bienvenido a la API de SGE ASI',
+    message: 'Hola a la API de SGE ASI',
     version: '1.0.0',
     documentation: '/api-docs',
   });

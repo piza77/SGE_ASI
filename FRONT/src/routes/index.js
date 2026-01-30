@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/', (req, res) => {
   res.json({
     success: true,
-    message: 'Bienvenido a la API de SGE ASI',
+    message: 'Hola a la API de SGE ASI',
     version: '1.0.0',
     modules: [
       'auth',
