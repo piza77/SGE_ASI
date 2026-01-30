@@ -1,5 +1,5 @@
 # Etapa 1: Construcción del Frontend
-FROM node:18-slim AS build
+FROM node:20-slim AS build
 
 # Establecer el directorio de trabajo
 WORKDIR /app
@@ -11,7 +11,7 @@ COPY package*.json ./
 ENV NPM_CONFIG_OPTIONAL=false
 
 # Instalar dependencias sin incluir las opcionales
-RUN npm ci --only=production
+RUN npm ci
 
 # Copiar el resto del código del proyecto
 COPY . .
