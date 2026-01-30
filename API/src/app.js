@@ -1,77 +1,39 @@
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
-<<<<<<< HEAD
+const morgan = require('morgan');
 const swaggerUi = require('swagger-ui-express');
 const swaggerSpec = require('./config/swagger');
 const errorHandler = require('./middleware/errorHandler');
 
 /**
  * Crear instancia de Express
-=======
-const morgan = require('morgan');
-const swaggerUi = require('swagger-ui-express');
-const swaggerSpec = require('./config/swagger');
-
-/**
- * Create Express application
->>>>>>> origin/copilot/create-erp-module-structure
  */
 const app = express();
 
 /**
-<<<<<<< HEAD
  * Middleware de seguridad
-=======
- * Security middleware
->>>>>>> origin/copilot/create-erp-module-structure
  */
 app.use(helmet());
 
 /**
-<<<<<<< HEAD
- * Middleware CORS
- */
-app.use(cors({
-  origin: process.env.CORS_ORIGIN || '*',
-  credentials: true,
-}));
-
-/**
- * Middleware para parsear JSON y URL-encoded
-=======
- * CORS configuration
+ * Configuración de CORS
  */
 const corsOptions = {
   origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
   credentials: true,
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
 
 /**
- * Body parsing middleware
->>>>>>> origin/copilot/create-erp-module-structure
+ * Middleware para parsear JSON y URL-encoded
  */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 /**
-<<<<<<< HEAD
- * Ruta de health check
- */
-app.get('/health', (req, res) => {
-  res.json({
-    success: true,
-    message: 'API está funcionando correctamente',
-    timestamp: new Date().toISOString(),
-  });
-});
-
-/**
- * Documentación Swagger
-=======
- * Logging middleware
+ * Middleware de logging
  */
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
@@ -80,13 +42,23 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 /**
- * API Documentation
->>>>>>> origin/copilot/create-erp-module-structure
+ * Ruta de health check
+ */
+app.get('/health', (req, res) => {
+  res.json({
+    success: true,
+    message: 'API está funcionando correctamente',
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV,
+  });
+});
+
+/**
+ * Documentación Swagger
  */
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
   explorer: true,
   customCss: '.swagger-ui .topbar { display: none }',
-<<<<<<< HEAD
   customSiteTitle: 'SGE ASI API Documentation',
 }));
 
@@ -97,78 +69,30 @@ const routes = require('./routes');
 app.use('/api', routes);
 
 /**
- * Ruta 404
+ * Ruta raíz
+ */
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: 'Bienvenido a la API de SGE ASI',
+    version: '1.0.0',
+    documentation: '/api-docs',
+  });
+});
+
+/**
+ * Manejador de rutas no encontradas
  */
 app.use((req, res) => {
   res.status(404).json({
     success: false,
     message: 'Ruta no encontrada',
-=======
-  customSiteTitle: 'SGE ASI API Documentation'
-}));
-
-/**
- * Health check endpoint
- */
-app.get('/health', (req, res) => {
-  res.status(200).json({
-    success: true,
-    message: 'API is running',
-    timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV
->>>>>>> origin/copilot/create-erp-module-structure
+    path: req.originalUrl,
   });
 });
 
 /**
-<<<<<<< HEAD
- * Middleware de manejo de errores (debe ir al final)
- */
-app.use(errorHandler);
-=======
- * Root endpoint
- */
-app.get('/', (req, res) => {
-  res.json({
-    success: true,
-    message: 'Welcome to SGE ASI API',
-    version: '1.0.0',
-    documentation: '/api-docs'
-  });
-});
-
-/**
- * Module routes will be imported here
- * Example:
- * const authRoutes = require('./modules/auth/routes');
- * app.use('/api/auth', authRoutes);
- */
-
-// TODO: Import and use module routes
-// app.use('/api/auth', require('./modules/auth/routes'));
-// app.use('/api/tenants', require('./modules/tenants/routes'));
-// app.use('/api/cost-centers', require('./modules/cost-centers/routes'));
-// app.use('/api/inventory', require('./modules/inventory/routes'));
-// app.use('/api/documents', require('./modules/documents/routes'));
-// app.use('/api/clients', require('./modules/clients/routes'));
-// app.use('/api/employees', require('./modules/employees/routes'));
-// app.use('/api/portfolio', require('./modules/portfolio/routes'));
-// app.use('/api/treasury', require('./modules/treasury/routes'));
-// app.use('/api/suppliers', require('./modules/suppliers/routes'));
-
-/**
- * 404 handler
- */
-app.use((req, res) => {
-  res.status(404).json({
-    success: false,
-    message: 'Route not found',
-    path: req.originalUrl
-  });
-});
-
-/**
- * Global error handler
+ * Middleware de manejo de errores global
  */
 app.use((err, req, res, _next) => {
   console.error('Error:', err);
@@ -179,9 +103,11 @@ app.use((err, req, res, _next) => {
   res.status(statusCode).json({
     success: false,
     message,
-    ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
+    ...(process.env.NODE_ENV === 'development' && { stack: err.stack }),
   });
 });
->>>>>>> origin/copilot/create-erp-module-structure
 
+/**
+ * Exportar la aplicación
+ */
 module.exports = app;
