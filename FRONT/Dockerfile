@@ -1,44 +1,32 @@
-# Etapa 1: Construcción del Frontend
-FROM node:20-slim AS build
-
-# Establecer el directorio de trabajo
+# Etapa de Construcción
+FROM node:18-alpine AS build
 WORKDIR /app
 
-# Copiar archivo package.json y package-lock.json
+# Copiar archivos necesarios
 COPY package*.json ./
 COPY package-lock.json ./
 
-# Desactivar dependencias opcionales en npm
-ENV NPM_CONFIG_OPTIONAL=false
+# Instalar dependencias excluyendo opcionales
+RUN npm install --omit=optional
 
-# Instalar dependencias sin incluir las opcionales
-RUN npm ci install --omit=optional
-RUN npm install -g npm@latest
-
-# Copiar el resto del código del proyecto
+# Copiar el resto del código de la aplicación
 COPY . .
 
-# Construcción de la aplicación
+# Construir la aplicación
 RUN npm run build
 
-# Etapa 2: Servir la aplicación estática con Nginx
-FROM nginx:stable-alpine
+# Etapa de Producción
+FROM nginx:alpine
+WORKDIR /usr/share/nginx/html
 
-# Remover archivos predeterminados de Nginx
-RUN rm -rf /usr/share/nginx/html/*
+# Copiar los archivos construidos desde la etapa de construcción
+COPY --from=build /app/dist .
 
-# Copiar los archivos construidos del proyecto
-COPY --from=build /app/dist /usr/share/nginx/html
+# Copiar configuración personalizada de Nginx
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# Configurar archivo Nginx (opcional)
-COPY ./nginx.conf /etc/nginx/conf.d/default.conf
-
-# Exponer puerto 80
+# Exponer el puerto del contenedor
 EXPOSE 80
 
-# Chequeo de salud (opcional)
-HEALTHCHECK --interval=30s --timeout=5s \
-  CMD wget --quiet --spider http://localhost:80 || exit 1
-
-# Comando para iniciar el servicio
+# Comando para iniciar Nginx
 CMD ["nginx", "-g", "daemon off;"]
