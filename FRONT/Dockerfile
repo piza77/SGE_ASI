@@ -6,12 +6,14 @@ WORKDIR /app
 
 # Copiar archivo package.json y package-lock.json
 COPY package*.json ./
+COPY package-lock.json ./
 
 # Desactivar dependencias opcionales en npm
 ENV NPM_CONFIG_OPTIONAL=false
 
 # Instalar dependencias sin incluir las opcionales
-RUN npm ci
+RUN npm ci install --omit=optional
+RUN npm install -g npm@latest
 
 # Copiar el resto del código del proyecto
 COPY . .
