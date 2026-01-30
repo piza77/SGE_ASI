@@ -9,7 +9,7 @@ const pool = mysql.createPool({
   port: process.env.DB_PORT || 3306,
   user: process.env.DB_USER || 'root',
   password: process.env.DB_PASSWORD || 'piza77',
-  database: process.env.DB_NAME || 'sge_asi_erp',
+  database: process.env.DB_NAME || 'sge_asi',
   waitForConnections: true,
   connectionLimit: parseInt(process.env.DB_POOL_MAX) || 10,
   queueLimit: 0,

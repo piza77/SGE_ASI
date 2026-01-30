@@ -11,7 +11,7 @@ services:
       MYSQL_USER: sge_user
       MYSQL_PASSWORD: sge_password
     ports:
-      - "3306:3306"
+      - "3306:3307"
     volumes:
       - mysql_data:/var/lib/mysql
       - ./API/database/init.sql:/docker-entrypoint-initdb.d/init.sql
